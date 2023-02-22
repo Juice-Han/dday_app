@@ -106,7 +106,7 @@ class __DDayState extends State<_DDay> {
             controller: _scrollController,
             child: TextField(
             scrollController: _scrollController,
-            autofocus: true,
+            autofocus: false,
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black),
