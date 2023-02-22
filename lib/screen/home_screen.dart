@@ -41,6 +41,7 @@ class _DDay extends StatefulWidget {
 class __DDayState extends State<_DDay> {
   DateTime now = DateTime.now();
   String days = 'Day';
+  String day = 'D-Day 날짜';
   TextEditingController _editTextController = TextEditingController();
 
   // Initialise a scroll controller.
@@ -60,7 +61,7 @@ class __DDayState extends State<_DDay> {
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black)
               ),
-              hintText: 'DDay를 설정할 주제를 입력하세요',
+              hintText: 'D-Day를 설정할 주제를 입력하세요',
             ),
           ),
           SizedBox(height: 30,),
@@ -80,6 +81,7 @@ class __DDayState extends State<_DDay> {
                         onDateTimeChanged: (DateTime date) {
                           setState(() {
                             days = (DateTime(date.year,date.month,date.day).difference(now).inDays+1).toString();
+                            day = '${date.year}.${date.month}.${date.day}';
                             if(days == '0') {
                               days = 'Day!!';
                             }
@@ -96,6 +98,7 @@ class __DDayState extends State<_DDay> {
               Icons.settings,
             ),
           ),
+          Text(day,style: TextStyle(fontSize: 20),),
           SizedBox(height: 30,),
           Text('D-'+days,style: TextStyle(fontSize: 50),),
           SizedBox(height: 50,),
