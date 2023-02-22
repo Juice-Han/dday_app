@@ -40,7 +40,11 @@ class _DDay extends StatefulWidget {
 
 class __DDayState extends State<_DDay> {
   DateTime now = DateTime.now();
-  int days = 0;
+  String days = 'Day';
+  TextEditingController _editTextController = TextEditingController();
+
+  // Initialise a scroll controller.
+  ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +75,14 @@ class __DDayState extends State<_DDay> {
                       color: Colors.white,
                       height: 300,
                       child: CupertinoDatePicker(
+                        minimumDate: DateTime(now.year,now.month,now.day).subtract(Duration(days: 1)),
                         mode: CupertinoDatePickerMode.date,
                         onDateTimeChanged: (DateTime date) {
                           setState(() {
-                            days = DateTime(date.year,date.month,date.day).difference(now).inDays+1;
+                            days = (DateTime(date.year,date.month,date.day).difference(now).inDays+1).toString();
+                            if(days == '0') {
+                              days = 'Day!!';
+                            }
                           });
                         },
                       ),
@@ -89,17 +97,22 @@ class __DDayState extends State<_DDay> {
             ),
           ),
           SizedBox(height: 30,),
-          Text('D-${days}',style: TextStyle(fontSize: 50),),
+          Text('D-'+days,style: TextStyle(fontSize: 50),),
           SizedBox(height: 50,),
-          TextField(
+          Scrollbar(
+            controller: _scrollController,
+            child: TextField(
+            scrollController: _scrollController,
+            autofocus: true,
+            keyboardType: TextInputType.multiline,
             decoration: InputDecoration(border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black),
               ),
-              hintText: '톱니바퀴 모양을 누르면 날짜를 선택할 수 있습니다.\n이곳엔 추가로 필요한 메모를 작성하세요.'),
-            keyboardType: TextInputType.multiline,
-            maxLines: null,
+            hintText: '톱니바퀴 모양을 누르면 날짜를 선택할 수 있습니다.\n이곳엔 추가로 필요한 메모를 작성하세요.\n최대 다섯줄까지 보입니다.'),
+            maxLines: 5,
             
-          ),
+          ),),
+          
         ],
       ),
     );
